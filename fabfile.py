@@ -320,7 +320,7 @@ def install_erlang_elixir(c, erlang_version, elixir_version, user):
     # Erlang requirements
     c.run('apt install -qy make autoconf m4 libncurses5-dev')
     # For building with wxWidgets
-    c.run('apt install -qy libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3')
+    c.run('apt install -qy libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev')
     # For building ssl (libssh-4 libssl-dev zlib1g-dev)
     c.run('apt install -qy libssh-dev')
     # ODBC support (libltdl3-dev odbcinst1debian2 unixodbc)
@@ -349,7 +349,7 @@ def install_erlang_elixir(c, erlang_version, elixir_version, user):
 
 
 def put_phoenix_secret_config(c, environment, project_name, db_user, db_pass):
-    run_as("mkdir -p ~/_config", user="builder")
+    run_as(c, "mkdir -p ~/_config", user="builder")
     secret_path = "/var/builder/_config/{env}.secret.exs".format(env=environment)
     c.put("files/secret.exs", secret_path)
     secret_key = generate_secret_key().replace("/", "\\/")
